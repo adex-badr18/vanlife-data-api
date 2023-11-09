@@ -11,13 +11,13 @@ export async function action({ request }) {
     const formData = await request.formData();
     const email = formData.get('email');
     const password = formData.get('password');
+    const data = await loginUser({email, password});
 
-    console.log(email, password);
+    console.log(data);
     return null
 }
 
 export default function Login() {
-    // const [loginFormData, setLoginFormData] = React.useState({ email: "", password: "" });
     const message = useLoaderData();
     const [status, setStatus] = useState('idle');
     const [error, setError] = useState(null)
