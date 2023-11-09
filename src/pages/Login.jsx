@@ -1,5 +1,5 @@
 import React from "react";
-import { useLoaderData, Form } from "react-router-dom";
+import { useLoaderData, Form, redirect } from "react-router-dom";
 import { loginUser } from "../api";
 import { useState } from "react";
 
@@ -13,9 +13,8 @@ export async function action({ request }) {
     const password = formData.get('password');
     const data = await loginUser({email, password});
 
-    console.log(data);
     localStorage.setItem('loggedIn', true);
-    return null
+    return redirect('/host', {replace: true});
 }
 
 export default function Login() {
