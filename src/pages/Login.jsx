@@ -14,7 +14,7 @@ export async function action({ request }) {
     const data = await loginUser({email, password});
 
     localStorage.setItem('loggedIn', true);
-    return redirect('/host', {replace: true});
+    return redirect('/host');
 }
 
 export default function Login() {
@@ -50,7 +50,7 @@ export default function Login() {
             {message && <h3 className="error-message">{message}</h3>}
             {error && <h3 className="error-message">{error.message}</h3>}
 
-            <Form method="post" className="login-form">
+            <Form method="post" className="login-form" replace>
                 <input
                     name="email"
                     type="email"
