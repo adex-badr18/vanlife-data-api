@@ -1,35 +1,71 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {
+    Route,
+    RouterProvider,
+    redirect,
+    createBrowserRouter,
+    createRoutesFromElements
+} from 'react-router-dom';
+import Home from "./pages/Home"
+import About from "./pages/About"
+import Vans, { loader as vansLoader } from "./pages/Vans/Vans"
+import VanDetail from "./pages/Vans/VanDetail"
+import Dashboard from "./pages/Host/Dashboard"
+import Income from "./pages/Host/Income"
+import Reviews from "./pages/Host/Reviews"
+import HostVans from "./pages/Host/HostVans"
+import HostVanDetail from "./pages/Host/HostVanDetail"
+import HostVanInfo from "./pages/Host/HostVanInfo"
+import HostVanPricing from "./pages/Host/HostVanPricing"
+import HostVanPhotos from "./pages/Host/HostVanPhotos"
+import NotFound from "./pages/NotFound"
+import Login from "./pages/Login"
+import Layout from "./components/Layout"
+import HostLayout from "./components/HostLayout"
+import Error from "./components/Error"
+
+import "./server"
+import './App.css';
+
+const router = createBrowserRouter(createRoutesFromElements(
+    <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route
+            path="login"
+            element={<Login />}
+        />
+        <Route
+            path="vans"
+            element={<Vans />}
+            errorElement={<Error />}
+            loader={vansLoader}
+        />
+        <Route path="vans/:id" element={<VanDetail />} />
+
+        <Route path="host" element={<HostLayout />}>
+            {/**
+         * Challenge: Add a loader to every host route. For now,
+         * just have them `return null` (don't worry about checking
+         * for authentication yet)
+         */}
+            <Route index element={<Dashboard />} />
+            <Route path="income" element={<Income />} />
+            <Route path="reviews" element={<Reviews />} />
+            <Route path="vans" element={<HostVans />} />
+            <Route path="vans/:id" element={<HostVanDetail />}>
+                <Route index element={<HostVanInfo />} />
+                <Route path="pricing" element={<HostVanPricing />} />
+                <Route path="photos" element={<HostVanPhotos />} />
+            </Route>
+        </Route>
+        <Route path="*" element={<NotFound />} />
+    </Route>
+));
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    return (
+        <RouterProvider router={router} />
+    )
 }
 
-export default App
+export default App;
