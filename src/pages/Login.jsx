@@ -17,6 +17,7 @@ export default function Login() {
         e.preventDefault()
         try {
             setStatus('submitting')
+            setError(null)
             const data = await loginUser(loginFormData);
             console.log(data)
         } catch (error) {
