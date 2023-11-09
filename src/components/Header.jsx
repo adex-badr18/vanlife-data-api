@@ -1,5 +1,6 @@
-import React from "react"
-import { Link, NavLink } from "react-router-dom"
+import React from "react";
+import { Link, NavLink } from "react-router-dom";
+import { RxAvatar } from "react-icons/rx";
 
 export default function Header() {
     const activeStyles = {
@@ -31,10 +32,7 @@ export default function Header() {
                     Vans
                 </NavLink>
                 <Link to="login" className="login-link">
-                    <img 
-                        src="../assets/images/avatar-icon.png" 
-                        className="login-icon"
-                    />
+                    <RxAvatar className="login-icon" />
                 </Link>
             </nav>
         </header>
