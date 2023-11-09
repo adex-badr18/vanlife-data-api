@@ -10,19 +10,19 @@ export function loader({ request }) {
 export default function Login() {
     const [loginFormData, setLoginFormData] = React.useState({ email: "", password: "" });
     const message = useLoaderData();
-    const [state, setState] = useState('idle');
+    const [status, setStatus] = useState('idle');
     const [error, setError] = useState(null)
 
     async function handleSubmit(e) {
         e.preventDefault()
         try {
-            setState('submitting')
+            setStatus('submitting')
             const data = await loginUser(loginFormData);
             console.log(data)
         } catch (error) {
             setError(error);
         } finally {
-            setState('idle')
+            setStatus('idle')
         }
     }
 
@@ -55,7 +55,9 @@ export default function Login() {
                     placeholder="Password"
                     value={loginFormData.password}
                 />
-                <button disabled={state === 'submitting'}>Log in</button>
+                <button disabled={status === 'submitting'}>
+                    {status === 'submitting' ? 'Logging in...' : 'Log in'}
+                </button>
             </form>
         </div>
     )
