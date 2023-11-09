@@ -1,5 +1,6 @@
 import React from "react";
 import { useLoaderData } from "react-router-dom";
+import { loginUser } from "../api";
 
 export function loader({ request }) {
     return new URL(request.url).searchParams.get('message');
@@ -9,9 +10,10 @@ export default function Login() {
     const [loginFormData, setLoginFormData] = React.useState({ email: "", password: "" });
     const message = useLoaderData();
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault()
-        console.log(loginFormData)
+        const data = await loginUser(loginFormData);
+        console.log(data)
     }
 
     function handleChange(e) {
