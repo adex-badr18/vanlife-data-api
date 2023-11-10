@@ -1,5 +1,5 @@
 import React from "react";
-import { useLoaderData, Form, redirect } from "react-router-dom";
+import { useLoaderData, Form, redirect, useActionData } from "react-router-dom";
 import { loginUser } from "../api";
 import { useState } from "react";
 
@@ -11,38 +11,20 @@ export async function action({ request }) {
     const formData = await request.formData();
     const email = formData.get('email');
     const password = formData.get('password');
-    const data = await loginUser({email, password});
 
-    localStorage.setItem('loggedIn', true);
-    return redirect('/host');
+    try {
+        const user = await loginUser({email, password});
+        localStorage.setItem('loggedIn', true);
+        return redirect('/host');    
+    } catch (error) {
+        return error;
+    }
 }
 
 export default function Login() {
     const message = useLoaderData();
     const [status, setStatus] = useState('idle');
-    const [error, setError] = useState(null)
-
-    // async function handleSubmit(e) {
-    //     e.preventDefault()
-    //     try {
-    //         setStatus('submitting')
-    //         setError(null)
-    //         const data = await loginUser(loginFormData);
-    //         console.log(data)
-    //     } catch (error) {
-    //         setError(error);
-    //     } finally {
-    //         setStatus('idle')
-    //     }
-    // }
-
-    // function handleChange(e) {
-    //     const { name, value } = e.target
-    //     setLoginFormData(prev => ({
-    //         ...prev,
-    //         [name]: value
-    //     }))
-    // }
+    const error = useActionData();
 
     return (
         <div className="login-container">
