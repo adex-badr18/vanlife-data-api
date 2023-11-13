@@ -300,10 +300,6 @@ i[class*='van-type-'] {
     text-decoration: none;
 }
 
-.van-detail-container .back-button:visited {
-    
-}
-
 .van-detail-container .back-button span {
     text-decoration: underline;
 }
@@ -739,6 +735,9 @@ img.graph {
     margin-right: 5px;
 }
 
+.host-reviews .review p.review-text {
+    text-align: left;
+}
 
 .error-message {
     color: #cc0000;

@@ -43,7 +43,7 @@ export default function Reviews() {
                             <p className="name">{review.name}</p>
                             <p className="date">{review.date}</p>
                         </div>
-                        <p>{review.text}</p>
+                        <p className="review-text">{review.text}</p>
                     </div>
                     <hr />
                 </div>
