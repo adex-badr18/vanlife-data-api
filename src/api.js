@@ -1,3 +1,25 @@
+import { initializeApp } from "firebase/app";
+import {getFirestore} from "firebase/firestore/lite";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyA1WSt-eDHltrp9t9psXLZVyEFKuBbpuAo",
+    authDomain: "go-car-now.firebaseapp.com",
+    projectId: "go-car-now",
+    storageBucket: "go-car-now.appspot.com",
+    messagingSenderId: "564006304003",
+    appId: "1:564006304003:web:ed71f7f23bbb4174955136"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+
+
+
+
 export async function getVans(id) {
     const url = id ? `/api/vans/${id}` : "/api/vans"
     const res = await fetch(url)
