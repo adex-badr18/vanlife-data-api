@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import {collection, doc, getDoc, getDocs, getFirestore, query, where} from "firebase/firestore/lite";
+import {collection, doc, getDoc, getDocs, getFirestore, query, where, documentId} from "firebase/firestore/lite";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -48,6 +48,25 @@ export async function getHostVans() {
     }));
 
     return dataArr;
+}
+
+export async function getHostVan(carId) {
+    const hostCarsQuery = query(vansCollection, where(documentId(), '==', carId), where('hostId', '==', '123'));
+    const snapshot = await getDocs(hostCarsQuery);
+
+    const cars = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+    }));
+
+    const data = cars.map(car => {
+        return {
+            ...car,
+            imageUrl: car.imageUrl.startsWith('https://') ? car.imageUrl : `../..${car.imageUrl}`
+        }
+    });
+    // throw {message: 'Failed to fetch cars'};
+    return data[0];
 }
 
 
