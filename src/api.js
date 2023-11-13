@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import {collection, getDocs, getFirestore} from "firebase/firestore/lite";
+import {collection, doc, getDoc, getDocs, getFirestore} from "firebase/firestore/lite";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -25,8 +25,17 @@ export async function getVans() {
         ...doc.data()
     }));
 
-    console.log(dataArr)
     return dataArr;
+}
+
+export async function getVan(id) {
+    const vanRef = doc(db, 'cars', id);
+    const vanSnapshot = await getDoc(vanRef);
+
+    return {
+        id: vanSnapshot.id,
+        ...vanSnapshot.data()
+    }
 }
 
 
