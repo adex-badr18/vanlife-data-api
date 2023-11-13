@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import {getFirestore} from "firebase/firestore/lite";
+import {collection, getDocs, getFirestore} from "firebase/firestore/lite";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -15,24 +15,36 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+const vansCollection = collection(db, 'cars');
 
+export async function getVans() {
+    const querySnapshot = await getDocs(vansCollection);
 
+    const dataArr = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+    }));
 
-
-
-export async function getVans(id) {
-    const url = id ? `/api/vans/${id}` : "/api/vans"
-    const res = await fetch(url)
-    if (!res.ok) {
-        throw {
-            message: "Failed to fetch vans",
-            statusText: res.statusText,
-            status: res.status
-        }
-    }
-    const data = await res.json()
-    return data.vans
+    console.log(dataArr)
+    return dataArr;
 }
+
+
+
+
+// export async function getVans(id) {
+//     const url = id ? `/api/vans/${id}` : "/api/vans"
+//     const res = await fetch(url)
+//     if (!res.ok) {
+//         throw {
+//             message: "Failed to fetch vans",
+//             statusText: res.statusText,
+//             status: res.status
+//         }
+//     }
+//     const data = await res.json()
+//     return data.vans
+// }
 
 export async function getHostVans(id) {
     const url = id ? `/api/host/vans/${id}` : "/api/host/vans"
